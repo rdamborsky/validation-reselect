@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { isAppNameValid } from './general.validation';
+import { isAppNameValid, isFormValid } from './general.validation';
 
 const getAppNameClasses = createSelector(
   [isAppNameValid],
@@ -10,10 +10,11 @@ const getAppNameClasses = createSelector(
 );
 
 export const getDecoration = createSelector(
-  [getAppNameClasses],
-  (appNameClasses) => {
+  [getAppNameClasses, isFormValid],
+  (appNameClasses, isValid) => {
     return {
-      appNameClasses
+      appNameClasses,
+      isSubmitDisabled: !isValid
     };
   }
 );

@@ -33,7 +33,7 @@ class AppContainer extends Component {
           </label>
           <Configs/>
         </div>
-        <button>Save App</button>
+        <button disabled={ decor.isSubmitDisabled }>Save App</button>
       </div>
     );
   }
