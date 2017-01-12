@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Config from '../components/Config';
 import * as actions from '../actions';
 import { getConfigurations, getCurrentConfiguration, getDescriptors } from '../selectors/config';
-import { getConfigDecoration } from '../selectors/validation/configs.decoration';
+import { getMenuDecorationClasses, getConfigDecoration } from '../selectors/validation/configs.decoration';
 
 class Configs extends Component {
 
@@ -24,11 +24,13 @@ class Configs extends Component {
   }
 
   renderExisting() {
+    const menuDecorationClasses = this.props.menuValidationDecoration;
     return this.props.configurations.map(config => {
       const id = config.id;
+      const validityDecoration = menuDecorationClasses[id];
       return (
         <div key={ config.id } className="config item">
-          <a href="javascript:;" onClick={ this.props.actions.selectConfig.bind(this, id) }>* { config.name }</a>
+          <a href="javascript:;" onClick={ this.props.actions.selectConfig.bind(this, id) } className={ validityDecoration }>* { config.name }</a>
         </div>
       );
     });
@@ -62,6 +64,7 @@ Configs.propTypes = {
   })),
   currentConfig: PropTypes.object,
   descriptors: PropTypes.arrayOf(PropTypes.object),
+  menuValidationDecoration: PropTypes.object,
   configValidationDecoration: PropTypes.object,
   actions: PropTypes.object
 };
@@ -70,6 +73,7 @@ const mapStateToProps = state => ({
   configurations: getConfigurations(state),
   currentConfig: getCurrentConfiguration(state),
   descriptors: getDescriptors(state),
+  menuValidationDecoration: getMenuDecorationClasses(state),
   configValidationDecoration: getConfigDecoration(state)
 });
 

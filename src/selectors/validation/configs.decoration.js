@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { isSelectedConfigNameValid } from './configs.validation';
+import { isSelectedConfigNameValid, getConfigsValidityMap } from './configs.validation';
 
 const getNameClasses = createSelector(
   [isSelectedConfigNameValid],
@@ -15,5 +15,16 @@ export const getConfigDecoration = createSelector(
     return {
       nameClasses
     };
+  }
+);
+
+export const getMenuDecorationClasses = createSelector(
+  [getConfigsValidityMap],
+  (configsValidityMap) => {
+    let decorationMap = {};
+    configsValidityMap.forEach(config => {
+      decorationMap[config.id] = config.isValid ? 'valid' : 'invalid';
+    });
+    return decorationMap;
   }
 );
