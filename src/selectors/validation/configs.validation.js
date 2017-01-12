@@ -30,3 +30,10 @@ export const getConfigsValidityMap = createSelector(
     });
   }
 );
+
+export const getIsAnyConfigValid = createSelector(
+  [getConfigsValidityMap],
+  (configsValidityMap) => {
+    return configsValidityMap.find(config => config.isValid);
+  }
+);

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { isSelectedConfigNameValid, getConfigsValidityMap } from './configs.validation';
+import { isSelectedConfigNameValid, getConfigsValidityMap, getIsAnyConfigValid } from './configs.validation';
 
 const getNameClasses = createSelector(
   [isSelectedConfigNameValid],
@@ -26,5 +26,12 @@ export const getMenuDecorationClasses = createSelector(
       decorationMap[config.id] = config.isValid ? 'valid' : 'invalid';
     });
     return decorationMap;
+  }
+);
+
+export const getConfigsValidationMessage = createSelector(
+  [getIsAnyConfigValid],
+  (isAnyConfigValid) => {
+    return isAnyConfigValid ? null : 'You have to add at least one valid configuration.';
   }
 );

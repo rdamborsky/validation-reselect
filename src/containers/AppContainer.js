@@ -6,6 +6,7 @@ import Configs from './Configs';
 import * as actions from '../actions';
 import { getAppName } from '../selectors/general';
 import { getDecoration } from '../selectors/validation/general.decoration';
+import { getConfigsValidationMessage } from '../selectors/validation/configs.decoration';
 
 class AppContainer extends Component {
 
@@ -26,7 +27,10 @@ class AppContainer extends Component {
           <input value={ props.appName } onChange={ this.onChangeAppName.bind(this) } className={ decor.appNameClasses }/>
         </div>
         <div>
-          <label>Configurations</label>
+          <label>
+            Configurations
+            { this.renderConfigsMessage() }
+          </label>
           <Configs/>
         </div>
         <button>Save App</button>
@@ -38,17 +42,29 @@ class AppContainer extends Component {
     this.props.actions.changeAppName(e.target.value);
   }
 
+  renderConfigsMessage() {
+    const message = this.props.configsValidationMessage;
+    if (!message) {
+      return null;
+    }
+    return (
+      <span className="message">{ message }</span>
+    );
+  }
+
 }
 
 AppContainer.propTypes = {
   appName: PropTypes.string,
   validationDecoration: PropTypes.object,
+  configsValidationMessage: PropTypes.string,
   actions: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   appName: getAppName(state),
-  validationDecoration: getDecoration(state)
+  validationDecoration: getDecoration(state),
+  configsValidationMessage: getConfigsValidationMessage(state)
 });
 
 const mapDispatchToProps = dispatch => ({
