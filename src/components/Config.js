@@ -13,12 +13,13 @@ class Config extends Component {
     }
 
     const actions = props.actions;
+    const decor = props.validationDecoration;
     return (
       <div>
         <div>
-          <label>Name</label>
+          <label>Name (required)</label>
           <br />
-          <input value={ values.name } onChange={ e => actions.changeName(e.target.value) }/>
+          <input value={ values.name } onChange={ e => actions.changeName(e.target.value) } className={ decor.nameClasses }/>
         </div>
         <div>
           <label>Properties descriptors</label>
@@ -61,6 +62,7 @@ Config.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string
   })),
+  validationDecoration: PropTypes.object,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeDescriptor: PropTypes.func.isRequired,
