@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Configs from './Configs';
 import * as actions from '../actions';
 import { getAppName } from '../selectors/general';
+import { getDecoration } from '../selectors/validation/general.decoration';
 
 class AppContainer extends Component {
 
@@ -16,11 +17,13 @@ class AppContainer extends Component {
   }
 
   render() {
+    const props = this.props;
+    const decor = props.validationDecoration;
     return (
       <div>
         <div>
           <label>Application name</label>
-          <input value={ this.props.appName } onChange={ this.onChangeAppName.bind(this) }/>
+          <input value={ props.appName } onChange={ this.onChangeAppName.bind(this) } className={ decor.appNameClasses }/>
         </div>
         <div>
           <label>Configurations</label>
@@ -39,11 +42,13 @@ class AppContainer extends Component {
 
 AppContainer.propTypes = {
   appName: PropTypes.string,
+  validationDecoration: PropTypes.object,
   actions: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  appName: getAppName(state)
+  appName: getAppName(state),
+  validationDecoration: getDecoration(state)
 });
 
 const mapDispatchToProps = dispatch => ({
