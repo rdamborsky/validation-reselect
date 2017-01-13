@@ -2,7 +2,8 @@ import { createSelector } from 'reselect';
 
 const findConfigs = state => state.formValues.get('configs');
 const findDescriptors = state => state.formValues.get('descriptors');
-const getSelectedConfigId = state => state.formValues.get('selectedConfigId');
+
+export const getSelectedConfigId = state => state.formValues.get('selectedConfigId');
 
 export const getConfigurations = createSelector(
   [findConfigs],

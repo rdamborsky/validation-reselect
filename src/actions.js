@@ -2,7 +2,8 @@ import {
   LOAD_DESCRIPTORS_REQUEST, LOAD_DESCRIPTORS_SUCCESS, LOAD_DESCRIPTORS_FAILURE,
   CHANGE_APP_NAME,
   ADD_CONFIG, SELECT_CONFIG,
-  CHANGE_CONFIG_NAME, CHANGE_CONFIG_DESCRIPTOR, CHANGE_CONFIG_OWNER
+  CHANGE_CONFIG_NAME, CHANGE_CONFIG_DESCRIPTOR,
+  CHECK_OWNER_REQUEST, CHECK_OWNER_SUCCESS, CHECK_OWNER_FAILURE
 } from './actionTypes';
 
 const mockLoadDescriptors = () => {
@@ -17,6 +18,16 @@ const mockLoadDescriptors = () => {
         ]
       });
     }, 500);
+  });
+};
+
+const mockCheckOwner = (email) => {
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve({
+        hasAccess: email === '' || email === 'bob@example.com'
+      });
+    }, 300);
   });
 };
 
@@ -61,9 +72,11 @@ export function changeConfigDescriptor(value) {
   };
 }
 
-export function changeConfigOwner(value) {
+export function changeConfigOwner(configId, value) {
   return {
-    type: CHANGE_CONFIG_OWNER,
+    types: [CHECK_OWNER_REQUEST, CHECK_OWNER_SUCCESS, CHECK_OWNER_FAILURE],
+    promise: mockCheckOwner(value),
+    configId,
     value
   };
 }

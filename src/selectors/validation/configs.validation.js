@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { getCurrentConfiguration, getConfigurations } from '../config';
+import { getAccessFlags, hasAccess } from '../validation';
 
 // it is still ok to use pure functions
 // you can also create a library of common validators (isNotEmpty, isEmail...)
@@ -20,12 +21,12 @@ export const isSelectedConfigNameValid = createSelector(
 );
 
 export const getConfigsValidityMap = createSelector(
-  [getConfigurations],
-  (configurations) => {
+  [getConfigurations, getAccessFlags],
+  (configurations, accessFlags) => {
     return configurations.map(config => {
       return {
         id: config.id,
-        isValid: isConfigValid(config)
+        isValid: isConfigValid(config) && hasAccess(accessFlags, config.id)
       };
     });
   }

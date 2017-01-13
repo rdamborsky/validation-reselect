@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { isSelectedConfigNameValid, getConfigsValidityMap, getIsAnyConfigValid } from './configs.validation';
+import { hasSelectedConfigOwnerAccess } from '../validation';
 
 const getNameClasses = createSelector(
   [isSelectedConfigNameValid],
@@ -9,11 +10,21 @@ const getNameClasses = createSelector(
   }
 );
 
+const getIsCheckingOwner = state => state.validation.get('isCheckingOwner');
+const getOwnerClasses = createSelector(
+  [hasSelectedConfigOwnerAccess],
+  (hasAccess) => {
+    return hasAccess ? '' : 'highlight';
+  }
+);
+
 export const getConfigDecoration = createSelector(
-  [getNameClasses],
-  (nameClasses) => {
+  [getNameClasses, getIsCheckingOwner, getOwnerClasses],
+  (nameClasses, isCheckingOwner, ownerClasses) => {
     return {
-      nameClasses
+      nameClasses,
+      isCheckingOwner,
+      ownerClasses
     };
   }
 );

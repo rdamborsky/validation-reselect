@@ -58,7 +58,7 @@ export default function formValues(state = initialValuesState, action) {
       return state.setIn(['configs', selected, 'descriptor'], action.value);
     }
 
-    case types.CHANGE_CONFIG_OWNER: {
+    case types.CHECK_OWNER_REQUEST: {
       const selected = state.get('selectedConfigId');
       return state.setIn(['configs', selected, 'owner'], action.value);
     }

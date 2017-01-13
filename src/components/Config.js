@@ -14,6 +14,7 @@ class Config extends Component {
 
     const actions = props.actions;
     const decor = props.validationDecoration;
+    const loadingIndicator = decor.isCheckingOwner ? 'Loading' : null;
     return (
       <div>
         <div>
@@ -29,7 +30,10 @@ class Config extends Component {
         <div>
           <label>Owner user</label>
           <br />
-          <input value={ values.owner } onChange={ e => actions.changeOwner(e.target.value) }/>
+          <input value={ values.owner } onChange={ e => actions.changeOwner(values.id, e.target.value) } className={ decor.ownerClasses }/>
+          { loadingIndicator }
+          <br />
+          <small>valid email: bob@example.com</small>
         </div>
       </div>
     );
@@ -54,6 +58,7 @@ class Config extends Component {
 
 Config.propTypes = {
   values: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     descriptor: PropTypes.string,
     owner: PropTypes.string
