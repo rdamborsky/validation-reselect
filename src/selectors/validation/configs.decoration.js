@@ -46,3 +46,10 @@ export const getConfigsValidationMessage = createSelector(
     return isAnyConfigValid ? null : 'You have to add at least one valid configuration.';
   }
 );
+
+export const getInvalidFieldsCount = createSelector(
+  [isSelectedConfigNameValid, hasSelectedConfigOwnerAccess],
+  (isNameValid, hasOwnerAccess) => {
+    return (isNameValid ? 0 : 1) + (hasOwnerAccess ? 0 : 1);
+  }
+);

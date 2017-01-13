@@ -33,6 +33,7 @@ class AppContainer extends Component {
           </label>
           <Configs/>
         </div>
+        { this.renderFooterMessage() }
         <button disabled={ decor.isSubmitDisabled }>Save App</button>
       </div>
     );
@@ -49,6 +50,16 @@ class AppContainer extends Component {
     }
     return (
       <span className="message">{ message }</span>
+    );
+  }
+
+  renderFooterMessage() {
+    const message = this.props.validationDecoration.footerMessage;
+    if (!message) {
+      return null;
+    }
+    return (
+      <p className="message">{ message }</p>
     );
   }
 
