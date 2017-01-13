@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { isSelectedConfigNameValid, getConfigsValidityMap, getIsAnyConfigValid } from './configs.validation';
+import { isSelectedConfigNameValid, getConfigsValidityMap } from './configs.validation';
 import { hasSelectedConfigOwnerAccess } from '../validation';
+import { getSelectedConfigId } from '../config';
 
 const getNameClasses = createSelector(
   [isSelectedConfigNameValid],
@@ -41,9 +42,9 @@ export const getMenuDecorationClasses = createSelector(
 );
 
 export const getConfigsValidationMessage = createSelector(
-  [getIsAnyConfigValid],
-  (isAnyConfigValid) => {
-    return isAnyConfigValid ? null : 'You have to add at least one valid configuration.';
+  [getSelectedConfigId],
+  (selectedConfigId) => {
+    return selectedConfigId ? null : 'You have to add at least one valid configuration.';
   }
 );
 
